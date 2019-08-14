@@ -14,27 +14,33 @@ import com.example.aboutme59160384.databinding.ActivityMainBinding
 class MainActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityMainBinding
-
+    private val myName: MyName = MyName("Aleks Haecky")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         //setContentView(R.layout.activity_main)
         binding = DataBindingUtil.setContentView(this, R.layout.activity_main)
+        binding.myName = myName
         binding.doneButton.setOnClickListener {
             addNickname(it)
         }
+
         binding.nicknameText.setOnClickListener {
             updateNickname(it)
         }
+
     }
     private fun addNickname(view: View) {
 
 
         binding.apply {
-            binding.nicknameText.text = binding.nicknameEdit.text.toString()
-            binding.nicknameEdit.visibility = View.GONE
-            binding.doneButton.visibility = View.GONE
-            binding.nicknameText.visibility = View.VISIBLE
+            myName?.nickname = nicknameEdit.text.toString()
+            invalidateAll()
+
+            nicknameEdit.visibility = View.GONE
+           doneButton.visibility = View.GONE
+            nicknameText.visibility = View.VISIBLE
         }
+
         // Hide the keyboard.
         val inputMethodManager = getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
         inputMethodManager.hideSoftInputFromWindow(view.windowToken, 0)
